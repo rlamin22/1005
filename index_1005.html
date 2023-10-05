@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <script>
+      let bgNetural = Math.ceil(Math.random() * 360);
+      let bgSaturation = Math.ceil(Math.random() * 60) + 40;
+      let bgLigthness = Math.ceil(Math.random() * 20) + 40;
+
+      let isDrawing = false;
+      document.addEventListener('mousedown', function () {
+        isDrawing = true;
+      });
+
+      document.addEventListener('mouseup', function () {
+        isDrawing = false;
+      });
+
+      document.addEventListener('mousemove', function (e) {
+        if (isDrawing) {
+          const box = document.createElement('div');
+          box.style.position = 'absolute';
+
+          let size = 50;
+          box.style.width = `${size}px`;
+          box.style.height = `${size}px`;
+          box.style.borderRadius = `10px`;
+          box.style.backgroundColor = `hsl(${bgNetural}, ${bgSaturation}%, ${bgLigthness}%)`;
+          bgNetural++;
+
+          box.style.top = `${e.clientY - size / 2}px`;
+          box.style.left = `${e.clientX - size / 2}px`;
+
+          document.body.appendChild(box);
+        }
+      });
+
+      let rotate = 0;
+
+      function boxRotate() {
+        requestAnimationFrame(boxRotate);
+
+        let boxes = document.querySelectorAll('div');
+        rotate += 0.8;
+        for (let i = 0; i < boxes.length; i++) {
+          boxes[i].style.transform = `rotate(${rotate}deg)`;
+        }
+      }
+      boxRotate();
+    </script>
+  </body>
+</html>
